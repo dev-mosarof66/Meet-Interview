@@ -1,0 +1,13 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Meet Interview">
+  <defs>
+    <linearGradient id="cb" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6366F1"/>
+      <stop offset="0.55" stop-color="#4F46E5"/>
+      <stop offset="1" stop-color="#4338CA"/>
+    </linearGradient>
+  </defs>
+  <rect width="48" height="48" rx="12" fill="url(#cb)"/>
+  <path d="M22 16 16 22l6 6" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M16 22h13c3.3 0 5 1.9 5 5v2" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="35" cy="14" r="3.4" fill="#FB7185"/>
+</svg>

@@ -1,0 +1,59 @@
+<svg width="420" height="470" viewBox="0 0 420 470" fill="none" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
+  <rect width="420" height="470" rx="16" fill="#F8FAFC"/>
+  <text x="210" y="30" text-anchor="middle" font-size="16" font-weight="700" fill="#1E1B4B">Meet Interview — logo concepts</text>
+
+  <!-- ============ A · Monogram C ============ -->
+  <svg x="50" y="50" width="120" height="120" viewBox="0 0 64 64">
+    <defs><linearGradient id="cbA" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6366F1"/><stop offset=".55" stop-color="#4F46E5"/><stop offset="1" stop-color="#4338CA"/>
+    </linearGradient></defs>
+    <rect width="64" height="64" rx="15" fill="url(#cbA)"/>
+    <path d="M44 21.4A16 16 0 1 0 44 42.6" stroke="#fff" stroke-width="7" stroke-linecap="round" fill="none"/>
+    <circle cx="44" cy="21.4" r="3.4" fill="#FB7185"/>
+  </svg>
+  <text x="110" y="190" text-anchor="middle" font-size="13" font-weight="600" fill="#3730A3">A · Monogram “C”</text>
+  <text x="110" y="206" text-anchor="middle" font-size="10" fill="#64748B">bold &amp; iconic · scales tiny</text>
+
+  <!-- ============ B · Reply ✓ ============ -->
+  <svg x="250" y="50" width="120" height="120" viewBox="0 0 64 64">
+    <defs><linearGradient id="cbB" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6366F1"/><stop offset=".55" stop-color="#4F46E5"/><stop offset="1" stop-color="#4338CA"/>
+    </linearGradient></defs>
+    <rect width="64" height="64" rx="15" fill="url(#cbB)"/>
+    <path d="M24 19 18 25l6 6" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M18 25h13" stroke="#fff" stroke-width="3.4" stroke-linecap="round" fill="none"/>
+    <path d="M30 26l3.6 4.6L42 19" stroke="#FB7185" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </svg>
+  <text x="310" y="190" text-anchor="middle" font-size="13" font-weight="600" fill="#3730A3">B · Reply + Check</text>
+  <text x="310" y="206" text-anchor="middle" font-size="10" fill="#64748B">“answered” = the win moment</text>
+
+  <!-- ============ C · Signal / Ping ============ -->
+  <svg x="50" y="250" width="120" height="120" viewBox="0 0 64 64">
+    <defs><linearGradient id="cbC" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6366F1"/><stop offset=".55" stop-color="#4F46E5"/><stop offset="1" stop-color="#4338CA"/>
+    </linearGradient></defs>
+    <rect width="64" height="64" rx="15" fill="url(#cbC)"/>
+    <circle cx="24" cy="40" r="4.2" fill="#FB7185"/>
+    <path d="M26.1 28.2A12 12 0 0 1 35.8 37.9" stroke="#fff" stroke-width="4" stroke-linecap="round" fill="none"/>
+    <path d="M27.3 21.3A19 19 0 0 1 42.7 36.7" stroke="#fff" stroke-width="4" stroke-linecap="round" fill="none"/>
+  </svg>
+  <text x="110" y="390" text-anchor="middle" font-size="13" font-weight="600" fill="#3730A3">C · Signal / Ping</text>
+  <text x="110" y="406" text-anchor="middle" font-size="10" fill="#64748B">a response coming back to you</text>
+
+  <!-- ============ D · Conversation ============ -->
+  <svg x="250" y="250" width="120" height="120" viewBox="0 0 64 64">
+    <defs><linearGradient id="cbD" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6366F1"/><stop offset=".55" stop-color="#4F46E5"/><stop offset="1" stop-color="#4338CA"/>
+    </linearGradient></defs>
+    <rect width="64" height="64" rx="15" fill="url(#cbD)"/>
+    <rect x="11" y="13" width="27" height="17" rx="6" fill="#fff"/>
+    <path d="M17 30l-3 6 9-6z" fill="#fff"/>
+    <circle cx="19" cy="21.5" r="1.6" fill="#4F46E5"/><circle cx="24.5" cy="21.5" r="1.6" fill="#4F46E5"/><circle cx="30" cy="21.5" r="1.6" fill="#4F46E5"/>
+    <rect x="27" y="27" width="23" height="15" rx="6" fill="#FB7185"/>
+    <path d="M45 42l3 6-9-6z" fill="#FB7185"/>
+  </svg>
+  <text x="310" y="390" text-anchor="middle" font-size="13" font-weight="600" fill="#3730A3">D · Conversation</text>
+  <text x="310" y="406" text-anchor="middle" font-size="10" fill="#64748B">two-way · send &amp; reply</text>
+
+  <text x="210" y="448" text-anchor="middle" font-size="10" fill="#94A3B8">(current live mark = chat bubble + reply arrow)</text>
+</svg>
