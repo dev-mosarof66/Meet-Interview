@@ -148,6 +148,7 @@ export type Stack = {
 export type PrepPlanRound = StackRound & { focus: string[] };
 
 export type PrepPlan = {
+  title: string;
   summary: string;
   focusAreas: string[]; // overall, from JD vs profile gaps
   rounds: PrepPlanRound[];

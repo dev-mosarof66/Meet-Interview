@@ -193,7 +193,7 @@ export default function PrepCallPage() {
         {/* Left: the problem */}
         <section className="card p-5 lg:h-full lg:overflow-y-auto">
           <div className="flex flex-wrap items-center gap-2 text-[11px]">
-            <span className="chip bg-red-700/50 border-red-700 capitalize text-brand-100">
+            <span className="chip bg-amber-700/20 border-red-700 capitalize text-brand-100">
               {question.type.replace("-", " ")}
             </span>
             <span
@@ -246,8 +246,8 @@ export default function PrepCallPage() {
                 {sending
                   ? "typing…"
                   : aiOffline
-                  ? "practice mode · AI quota reached"
-                  : "live mock interview"}
+                  ? "AI Interviwer Offline"
+                  : "Live Mock Interview"}
               </div>
             </div>
           </div>
@@ -320,7 +320,7 @@ function Bubble({ turn }: { turn: InterviewTurn }) {
         className={
           "max-w-[85%] rounded-2xl px-3.5 py-2 text-sm " +
           (isAI
-            ? "rounded-tl-sm bg-brand-100 text-brand-900"
+            ? "rounded-tl-sm bg-brand-700/50 text-brand-100"
             : "whitespace-pre-wrap rounded-tr-sm bg-brand-500 text-white")
         }
       >
@@ -328,7 +328,7 @@ function Bubble({ turn }: { turn: InterviewTurn }) {
           <Markdown
             text={turn.text}
             strongClass="font-semibold text-brand-900"
-            codeClass="rounded bg-brand-900/15 px-1 py-0.5 font-mono text-[0.85em] text-brand-900"
+            codeClass="rounded bg-amber-900/30 px-1 py-0.5 font-mono text-[0.85em] text-brand-200"
           />
         ) : (
           turn.text

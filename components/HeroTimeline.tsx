@@ -113,7 +113,7 @@ export default function HeroTimeline() {
 function ScreenPaste() {
   return (
     <div className="space-y-3 h-full flex flex-col justify-between">
-      <div className="space-y-3">
+      <div className="space-y-3 flex-1">
         <div className="label">Paste the job you found</div>
         <div className="rounded-lg border border-line bg-canvas p-3 text-xs leading-relaxed text-muted">
           <span className="text-ink">Senior Product Marketing Manager</span> —

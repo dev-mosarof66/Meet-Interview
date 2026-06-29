@@ -102,8 +102,12 @@ export default function PrepSessionPage() {
           </div>
         </div>
 
+        {session.plan.title && (
+          <h2 className="mt-4 text-lg font-semibold">{session.plan.title}</h2>
+        )}
+
         {session.plan.summary && (
-          <p className="mt-4 text-sm text-muted">{session.plan.summary}</p>
+          <p className="mt-1 text-sm text-muted">{session.plan.summary}</p>
         )}
 
         {session.plan.focusAreas.length > 0 && (
