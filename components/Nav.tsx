@@ -6,15 +6,21 @@ import { useEffect, useRef, useState } from "react";
 import ThemeToggle from "./ThemeToggle";
 import { Logo } from "./Logo";
 import { authClient } from "@/lib/auth-client";
-import { FiClipboard, FiBarChart2, FiUser, FiLogOut } from "react-icons/fi";
+import {
+  FiClipboard,
+  FiBarChart2,
+  FiUser,
+  FiLogOut,
+  FiTarget,
+} from "react-icons/fi";
 
 const links = [
   { href: "/pipeline", label: "Pipeline", Icon: FiClipboard },
+  { href: "/practice", label: "Practice", Icon: FiTarget },
   { href: "/analytics", label: "Analytics", Icon: FiBarChart2 },
   { href: "/profile", label: "Profile", Icon: FiUser },
 ];
 
-// Profile lives in the account dropdown on desktop, so keep it out of the top links.
 const topLinks = links.filter((l) => l.href !== "/profile");
 
 export default function Nav() {
@@ -54,7 +60,7 @@ export default function Nav() {
                   className={
                     "rounded-lg px-3 py-1.5 text-sm font-semibold transition " +
                     (active
-                      ? "bg-brand-100 text-brand-700"
+                      ? "text-brand-700"
                       : "text-muted hover:text-ink")
                   }
                 >

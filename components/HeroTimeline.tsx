@@ -142,7 +142,7 @@ function ScreenAnalyze() {
         </div>
         <div className="text-sm font-semibold text-ink">Strong match</div>
         <div className="flex flex-wrap gap-1.5">
-          {["go-to-market", "launches", "lifecycle", "SQL"].map((k) => (
+          {["GO TO MARKET", "LAUNCHES", "LIFECYCLE", "SQL"].map((k) => (
             <span key={k} className="chip bg-brand-100 text-brand-700">
               {k}
             </span>

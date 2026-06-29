@@ -19,6 +19,7 @@ import {
   FiGlobe,
   FiLock,
   FiAlertTriangle,
+  FiTarget,
 } from "react-icons/fi";
 import { GoDotFill } from "react-icons/go";
 
@@ -225,6 +226,14 @@ export default function JobPage() {
             <FiMail aria-hidden />
             {loading === "cover" ? "Generating…" : "Tailor Cover Letter"}
           </button>
+          {["responded", "interview", "offer"].includes(job.status) && (
+            <button
+              className="btn-ghost inline-flex items-center gap-1.5"
+              onClick={() => router.push(`/practice?job=${job.id}`)}
+            >
+              <FiTarget aria-hidden /> Prepare for interview
+            </button>
+          )}
         </div>
 
         {/* Incomplete-profile warning */}
@@ -397,6 +406,38 @@ export default function JobPage() {
                           </li>
                         ))}
                       </ul>
+                    </div>
+                  ))}
+                </div>
+              </ResumeSection>
+            )}
+
+            {resume.projects?.length > 0 && (
+              <ResumeSection title="Projects">
+                <div className="space-y-3">
+                  {resume.projects.map((pr, i) => (
+                    <div key={i}>
+                      <div className="text-sm font-semibold">
+                        {pr.name}
+                        {pr.tech ? (
+                          <span className="font-normal text-muted">
+                            {"  "}— {pr.tech}
+                          </span>
+                        ) : null}
+                      </div>
+                      {pr.description && (
+                        <p className="text-sm">{pr.description}</p>
+                      )}
+                      {pr.link && (
+                        <a
+                          href={pr.link}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-xs text-info hover:underline"
+                        >
+                          {pr.link}
+                        </a>
+                      )}
                     </div>
                   ))}
                 </div>

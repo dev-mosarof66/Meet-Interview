@@ -208,7 +208,7 @@ export default function LandingPage() {
             />
           </div>
           <p className="mt-10 text-center text-sm text-muted">
-            Join <span className="font-semibold text-ink"><CountUp value="12,000" />+</span> job
+            Join <span className="font-semibold text-ink"><CountUp value="200" />+</span> job
             seekers getting answered.
           </p>
         </div>

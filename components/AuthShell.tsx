@@ -37,12 +37,21 @@ export default function AuthShell({ children }: { children: React.ReactNode }) {
   // Public pages render on their own, no nav/gate.
   if (path === "/") return <>{children}</>;
 
+  // The live mock-interview "call" screen runs full-bleed: no nav/banner,
+  // a wider canvas for the problem + chat split.
+  const isInterview = /^\/prep\/[^/]+\/round\/[^/]+\/[^/]+$/.test(path);
+
   // Session still resolving: render the real (static) nav, skeleton only the page body.
   if (state === "loading")
     return (
       <>
-        <Nav />
-        <main className="mx-auto max-w-5xl space-y-4 px-4 pb-24 pt-6">
+        {!isInterview && <Nav />}
+        <main
+          className={
+            "mx-auto space-y-4 px-4 pb-24 pt-6 " +
+            (isInterview ? "max-w-7xl" : "max-w-5xl")
+          }
+        >
           <Skeleton className="h-28 w-full rounded-xl" />
           <Skeleton className="h-14 w-full rounded-xl" />
           <Skeleton className="h-20 w-full rounded-xl" />
@@ -68,14 +77,17 @@ export default function AuthShell({ children }: { children: React.ReactNode }) {
 
   return (
     <StoreProvider key={scope} scope={scope}>
-      <AiBanner />
-      <Nav />
+      {!isInterview && <AiBanner />}
+      {!isInterview && <Nav />}
       <main
         className={
-          "mx-auto max-w-5xl px-4 pt-6 " +
-          (isProfile
-            ? "pb-24 lg:h-[calc(100dvh-4rem)] lg:overflow-hidden lg:pb-0"
-            : "pb-24")
+          "mx-auto px-4 " +
+          (isInterview
+            ? "max-w-7xl pb-10 pt-4"
+            : "max-w-5xl pt-6 " +
+              (isProfile
+                ? "pb-24 lg:h-[calc(100dvh-4rem)] lg:overflow-hidden lg:pb-0"
+                : "pb-24"))
         }
       >
         {children}

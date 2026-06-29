@@ -13,6 +13,9 @@ import {
   FiTrash2,
   FiSettings,
   FiEdit2,
+  FiFolder,
+  FiArrowUp,
+  FiArrowDown,
 } from "react-icons/fi";
 import { useStore } from "@/lib/store";
 import { ProfileSkeleton, Skeleton } from "@/components/Skeleton";
@@ -20,12 +23,13 @@ import { MasterProfile } from "@/lib/types";
 import { authClient } from "@/lib/auth-client";
 import { getOnboarding } from "@/lib/onboarding";
 
-type Tab = "basics" | "skills" | "experience" | "import";
+type Tab = "basics" | "skills" | "experience" | "projects" | "import";
 
 const TABS: { id: Tab; label: string; short: string; Icon: IconType }[] = [
   { id: "basics", label: "Basics", short: "Basics", Icon: FiUser },
   { id: "skills", label: "Skills & education", short: "Skills", Icon: FiTarget },
   { id: "experience", label: "Experience", short: "Work", Icon: FiBriefcase },
+  { id: "projects", label: "Projects", short: "Projects", Icon: FiFolder },
   { id: "import", label: "Import résumé", short: "Import", Icon: FiFileText },
 ];
 
@@ -119,6 +123,7 @@ export default function ProfilePage() {
             skills: dbProfile.skills || [],
             experiences: dbProfile.experiences || [],
             education: dbProfile.education || [],
+            projects: dbProfile.projects || [],
           }
         : { ...profile };
       let changed = Boolean(dbProfile);
@@ -280,12 +285,33 @@ export default function ProfilePage() {
     reader.readAsDataURL(f);
   }
 
-  function onResumeFile(e: React.ChangeEvent<HTMLInputElement>) {
+  async function onResumeFile(e: React.ChangeEvent<HTMLInputElement>) {
     const f = e.target.files?.[0];
     if (!f) return;
-    const reader = new FileReader();
-    reader.onload = () => setResumeText(String(reader.result || ""));
-    reader.readAsText(f);
+    setImporting(true);
+    try {
+      const fd = new FormData();
+      fd.append("file", f);
+      const res = await fetch("/api/parse", { method: "POST", body: fd });
+      const data = await res.json();
+      if (data.profile) {
+        setProfile(data.profile);
+        setDraft(null);
+        setResumeText("");
+        setSaved(true);
+        setTab("basics");
+        fetch("/api/profile", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(data.profile),
+        }).catch(() => {});
+      } else if (data.error) {
+        alert(data.error);
+      }
+    } finally {
+      setImporting(false);
+      e.target.value = ""; // allow re-uploading the same file
+    }
   }
 
   const initials =
@@ -445,7 +471,7 @@ export default function ProfilePage() {
                 </div>
               ) : (
                 <button
-                  className="size-6 rounded-full border border-rose-700/50 inline-flex items-center justify-center gap-1"
+                  className="size-6 rounded-full border border-rose-100/50 inline-flex items-center justify-center gap-1"
                   onClick={() => setEditing(true)}
                 >
                   <FiEdit2 size={12} aria-hidden className="text-black dark:text-white" />
@@ -809,6 +835,133 @@ export default function ProfilePage() {
           </Card>
         )}
 
+        {tab === "projects" && (
+          <Card
+            title="Projects"
+            sub="Showcase what you've built — used to strengthen your résumé."
+            action={
+              <button
+                className="btn-outline"
+                onClick={() =>
+                  update({
+                    projects: [
+                      { id: uid(), name: "", description: "", tech: "", link: "" },
+                      ...(p.projects || []),
+                    ],
+                  })
+                }
+              >
+                + Add project
+              </button>
+            }
+          >
+            {(!p.projects || p.projects.length === 0) && (
+              <p className="rounded-lg border border-dashed border-line p-6 text-center text-sm text-muted">
+                No projects yet. Click “Add project” or import your résumé.
+              </p>
+            )}
+            <div className="space-y-4">
+              {(p.projects || []).map((proj, idx) => (
+                <div key={proj.id} className="rounded-xl border border-line p-4">
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <Field label="Project name">
+                      <input
+                        className="input"
+                        value={proj.name}
+                        onChange={(e) => {
+                          const projects = [...p.projects];
+                          projects[idx] = { ...proj, name: e.target.value };
+                          update({ projects });
+                        }}
+                      />
+                    </Field>
+                    <Field label="Tech stack">
+                      <input
+                        className="input"
+                        value={proj.tech}
+                        placeholder="React, Node.js, MongoDB"
+                        onChange={(e) => {
+                          const projects = [...p.projects];
+                          projects[idx] = { ...proj, tech: e.target.value };
+                          update({ projects });
+                        }}
+                      />
+                    </Field>
+                  </div>
+                  <div className="mt-3">
+                    <Field label="Link (live or repo)">
+                      <input
+                        className="input"
+                        value={proj.link}
+                        placeholder="https://…"
+                        onChange={(e) => {
+                          const projects = [...p.projects];
+                          projects[idx] = { ...proj, link: e.target.value };
+                          update({ projects });
+                        }}
+                      />
+                    </Field>
+                  </div>
+                  <div className="mt-3">
+                    <Field label="Description (what it does, your impact)">
+                      <textarea
+                        className="input min-h-[80px]"
+                        value={proj.description}
+                        onChange={(e) => {
+                          const projects = [...p.projects];
+                          projects[idx] = { ...proj, description: e.target.value };
+                          update({ projects });
+                        }}
+                      />
+                    </Field>
+                  </div>
+                  <div className="mt-2 flex items-center justify-between">
+                    <div className="flex gap-1">
+                      <button
+                        aria-label="Move up"
+                        disabled={idx === 0}
+                        className="grid h-7 w-7 place-items-center rounded-lg text-muted transition hover:bg-brand-100 hover:text-brand-700 disabled:opacity-30"
+                        onClick={() => {
+                          if (idx === 0) return;
+                          const arr = [...p.projects];
+                          [arr[idx - 1], arr[idx]] = [arr[idx], arr[idx - 1]];
+                          update({ projects: arr });
+                        }}
+                      >
+                        <FiArrowUp aria-hidden />
+                      </button>
+                      <button
+                        aria-label="Move down"
+                        disabled={idx === p.projects.length - 1}
+                        className="grid h-7 w-7 place-items-center rounded-lg text-muted transition hover:bg-brand-100 hover:text-brand-700 disabled:opacity-30"
+                        onClick={() => {
+                          const arr = [...p.projects];
+                          if (idx >= arr.length - 1) return;
+                          [arr[idx + 1], arr[idx]] = [arr[idx], arr[idx + 1]];
+                          update({ projects: arr });
+                        }}
+                      >
+                        <FiArrowDown aria-hidden />
+                      </button>
+                    </div>
+                    <button
+                      className="text-xs font-semibold text-muted hover:text-danger"
+                      onClick={() =>
+                        update({
+                          projects: p.projects.filter((_, i) => i !== idx),
+                        })
+                      }
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <SaveRow saved={saved} onSave={save} />
+          </Card>
+        )}
+
         {tab === "import" && (
           <Card
             title="Import your résumé"
@@ -816,13 +969,18 @@ export default function ProfilePage() {
           >
             <label className="mb-3 flex cursor-pointer flex-col items-center justify-center gap-1 rounded-xl border border-dashed border-line p-6 text-center transition hover:border-brand-300">
               <FiFileText className="text-xl text-brand-500" aria-hidden />
-              <span className="text-sm font-semibold">Upload résumé</span>
-              <span className="text-xs text-muted">.txt works best · or paste below</span>
+              <span className="text-sm font-semibold">
+                {importing ? "Reading your résumé…" : "Upload résumé"}
+              </span>
+              <span className="text-xs text-muted">
+                PDF, DOCX, or TXT — we extract the text and autofill
+              </span>
               <input
                 type="file"
                 accept=".txt,.md,.pdf,.doc,.docx"
                 className="hidden"
                 onChange={onResumeFile}
+                disabled={importing}
               />
             </label>
             <textarea
@@ -835,9 +993,6 @@ export default function ProfilePage() {
               <button className="btn-coral" onClick={importResume} disabled={importing}>
                 {importing ? "Reading…" : "Autofill my profile"}
               </button>
-              <span className="text-xs text-muted">
-                Replaces current fields. Best results with an AI key connected.
-              </span>
             </div>
           </Card>
         )}

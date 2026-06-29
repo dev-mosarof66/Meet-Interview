@@ -26,7 +26,7 @@ export default function ThemeToggle() {
       onClick={toggle}
       aria-label="Toggle dark mode"
       title={dark ? "Switch to light" : "Switch to dark"}
-      className="grid h-9 w-9 place-items-center rounded-lg text-muted transition hover:bg-brand-100 hover:text-brand-700"
+      className="grid h-9 w-9 place-items-center rounded-full text-muted transition hover:bg-brand-100 hover:text-brand-700"
     >
       {dark ? <FiSun size={18} /> : <FiMoon size={18} />}
     </button>

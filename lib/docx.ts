@@ -98,6 +98,44 @@ export async function buildResumeDocx(r: ResumeDoc): Promise<Buffer> {
     }
   }
 
+  if (r.projects?.length) {
+    children.push(sectionHeading("Projects"));
+    for (const p of r.projects) {
+      children.push(
+        new Paragraph({
+          spacing: { before: 100 },
+          children: [
+            new TextRun({ text: p.name || "", bold: true, size: 22 }),
+            p.tech
+              ? new TextRun({
+                  text: `  —  ${p.tech}`,
+                  italics: true,
+                  size: 18,
+                  color: "666666",
+                })
+              : new TextRun({ text: "" }),
+          ],
+        })
+      );
+      if (p.description) {
+        children.push(
+          new Paragraph({
+            children: [new TextRun({ text: p.description, size: 20 })],
+          })
+        );
+      }
+      if (p.link) {
+        children.push(
+          new Paragraph({
+            children: [
+              new TextRun({ text: p.link, size: 18, color: "2563EB" }),
+            ],
+          })
+        );
+      }
+    }
+  }
+
   if (r.education) {
     children.push(sectionHeading("Education"));
     children.push(

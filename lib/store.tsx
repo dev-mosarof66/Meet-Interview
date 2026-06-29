@@ -20,6 +20,7 @@ const EMPTY_PROFILE: MasterProfile = {
   skills: [],
   experiences: [],
   education: [],
+  projects: [],
 };
 
 type Store = {
@@ -84,6 +85,7 @@ export function StoreProvider({
             skills: d.skills || prev.skills,
             experiences: d.experiences || prev.experiences,
             education: d.education || prev.education,
+            projects: d.projects || prev.projects,
           }));
         }
         setJobs(Array.isArray(jj?.jobs) ? jj.jobs : []);

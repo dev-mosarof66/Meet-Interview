@@ -16,9 +16,13 @@ async function ensureTable() {
       skills      jsonb,
       education   jsonb,
       experiences jsonb,
+      projects    jsonb,
       updated_at  timestamptz DEFAULT now()
     )
   `);
+  await pool.query(
+    `ALTER TABLE profile ADD COLUMN IF NOT EXISTS projects jsonb`
+  );
   // Migrate a legacy `education text` column to jsonb (one entry per value).
   await pool.query(`
     DO $$
@@ -46,7 +50,7 @@ export async function GET(req: NextRequest) {
   try {
     await ensureTable();
     const { rows } = await pool.query(
-      `SELECT full_name, title, location, summary, photo, skills, education, experiences
+      `SELECT full_name, title, location, summary, photo, skills, education, experiences, projects
          FROM profile WHERE user_id = $1`,
       [session.user.id]
     );
@@ -74,8 +78,8 @@ export async function POST(req: NextRequest) {
     await ensureTable();
     await pool.query(
       `INSERT INTO profile
-         (user_id, full_name, title, location, summary, photo, skills, education, experiences, updated_at)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9, now())
+         (user_id, full_name, title, location, summary, photo, skills, education, experiences, projects, updated_at)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10, now())
        ON CONFLICT (user_id) DO UPDATE SET
          full_name   = COALESCE(EXCLUDED.full_name, profile.full_name),
          title       = COALESCE(EXCLUDED.title, profile.title),
@@ -85,6 +89,7 @@ export async function POST(req: NextRequest) {
          skills      = COALESCE(EXCLUDED.skills, profile.skills),
          education   = COALESCE(EXCLUDED.education, profile.education),
          experiences = COALESCE(EXCLUDED.experiences, profile.experiences),
+         projects    = COALESCE(EXCLUDED.projects, profile.projects),
          updated_at  = now()`,
       [
         session.user.id,
@@ -96,6 +101,7 @@ export async function POST(req: NextRequest) {
         json("skills"),
         json("education"),
         json("experiences"),
+        json("projects"),
       ]
     );
     return NextResponse.json({ ok: true });
