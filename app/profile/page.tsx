@@ -18,6 +18,7 @@ import {
   FiArrowDown,
 } from "react-icons/fi";
 import { useStore } from "@/lib/store";
+import { LocationField } from "@/components/LocationField";
 import { ProfileSkeleton, Skeleton } from "@/components/Skeleton";
 import { MasterProfile } from "@/lib/types";
 import { authClient } from "@/lib/auth-client";
@@ -520,12 +521,23 @@ export default function ProfilePage() {
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
-              <EditableField
-                editing={editing}
-                label="Location"
-                value={p.location}
-                onChange={(v) => update({ location: v })}
-              />
+              <div>
+                <label className="label">Location</label>
+                {editing ? (
+                  <LocationField
+                    value={p.location}
+                    onChange={(v) => update({ location: v })}
+                  />
+                ) : (
+                  <div className="whitespace-pre-wrap text-sm">
+                    {p.location?.trim() ? (
+                      p.location
+                    ) : (
+                      <span className="italic text-muted">Not set</span>
+                    )}
+                  </div>
+                )}
+              </div>
               <div className="sm:col-span-2">
                 <EditableField
                   editing={editing}

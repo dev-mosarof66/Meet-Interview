@@ -193,22 +193,22 @@ export default function LandingPage() {
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             <Testimonial
               quote="I went from total silence to three interviews in two weeks. Seeing my real response rate changed how I applied."
-              name="Priya S."
-              role="Product Designer"
+              name="Akram Hossain"
+              role="Full Stack Developer"
             />
             <Testimonial
               quote="The ghost-job flag alone is worth it. I stopped wasting nights on postings that were never real."
-              name="Marcus T."
-              role="Data Analyst"
+              name="Rifat Sarkar"
+              role="Junior Web Developer"
             />
             <Testimonial
               quote="Finally a tool that tailors my resume without inventing fake numbers. It just makes my real wins land harder."
-              name="Elena R."
-              role="Marketing Manager"
+              name="Nazmul Sarkar"
+              role="Full Stack Engineer"
             />
           </div>
           <p className="mt-10 text-center text-sm text-muted">
-            Join <span className="font-semibold text-ink"><CountUp value="200" />+</span> job
+            Join <span className="font-semibold text-ink"><CountUp value="50" />+</span> job
             seekers getting answered.
           </p>
         </div>
@@ -285,7 +285,7 @@ export default function LandingPage() {
       {/* CTA */}
       <section className="mx-auto max-w-6xl px-4 py-20 text-center">
         <div className="card bg-brand-900 p-12 text-white dark:bg-black">
-          <h2 className="text-3xl font-bold">Be in the <CountUp value="25" />% who get answered.</h2>
+          <h2 className="text-3xl font-bold">Be in the <CountUp value="7" />% who get answered.</h2>
           <p className="mx-auto mt-3 max-w-lg text-white/70">
             Create a free account and tailor your first application in minutes.
           </p>

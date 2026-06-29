@@ -604,6 +604,9 @@ function prepPlanMock(ctx: PrepContext): PrepPlan {
     ? gaps
     : ctx.stack.rounds.map((r) => r.label.toLowerCase());
   return {
+    title: `${
+      ctx.seniority ? ctx.seniority.charAt(0).toUpperCase() + ctx.seniority.slice(1) + " " : ""
+    }${ctx.role || ctx.stack.name} Interview Prep${ctx.company ? ` — ${ctx.company}` : ""}`,
     summary: `A ${ctx.seniority || "mid"}-level ${ctx.stack.name} interview${
       ctx.company ? ` at ${ctx.company}` : ""
     } typically runs ${ctx.stack.rounds.length} rounds. Focus your prep on the gaps between your profile and this role.`,
@@ -620,8 +623,9 @@ export async function generatePrepPlan(ctx: PrepContext): Promise<PrepPlan> {
       .join("; ");
     const system =
       "You are an interview-prep coach. Given a role stack, seniority, the job, and the candidate profile, " +
-      "produce a prep plan. Return ONLY JSON: {summary: string, focusAreas: string[], " +
+      "produce a prep plan. Return ONLY JSON: {title: string, summary: string, focusAreas: string[], " +
       "rounds: [{key: string, focus: string[]}]}. " +
+      "`title` = a short, specific plan title (e.g. \"Senior Frontend Interview Prep — Lumen Labs\"). " +
       "The `key` MUST be one of the provided round keys. `focus` = 2-4 concrete, role- and gap-specific topics to study for that round. " +
       "Derive focus areas from the gap between the job requirements and the candidate's actual profile.";
     const user = `STACK ROUNDS: ${roundList}\nSENIORITY: ${
@@ -644,6 +648,7 @@ export async function generatePrepPlan(ctx: PrepContext): Promise<PrepPlan> {
         : prepPlanMock(ctx).rounds.find((m) => m.key === r.key)?.focus || [],
     }));
     return {
+      title: j.title ? String(j.title) : prepPlanMock(ctx).title,
       summary: j.summary || prepPlanMock(ctx).summary,
       focusAreas:
         Array.isArray(j.focusAreas) && j.focusAreas.length

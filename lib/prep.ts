@@ -125,7 +125,7 @@ function rowToSession(r: any): PrepSession {
     role: r.role || "",
     company: r.company || "",
     jdText: r.jd_text || "",
-    plan: r.plan || { summary: "", focusAreas: [], rounds: [] },
+    plan: r.plan || { title: "", summary: "", focusAreas: [], rounds: [] },
     readiness: r.readiness ?? 0,
     createdAt: r.created_at != null ? Number(r.created_at) : 0,
   };
